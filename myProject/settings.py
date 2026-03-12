@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-@gdk772otq4##4eebt(cq&6-96m8&c^0ybl!479f)azt9e7*i%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'internalworkflow-production.up.railway.app', 'rapidprospectinternalworkflow-production.up.railway.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'rapidprospectbrandwebpackagev1-production.up.railway.app']
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',

@@ -468,48 +468,18 @@
           <!-- LEFT RAIL -->
           <aside class="sp-rail" id="spRail">
             <div class="sp-rail-head">
-              <span class="sp-rail-label">Workflows</span>
+              <span class="sp-rail-label">Packages</span>
               <button class="sp-collapse-btn" onclick="spToggleRail()" title="Collapse">
                 <i class="fas fa-bars"></i>
               </button>
             </div>
             <nav class="sp-nav">
-              <div class="sp-nav-item active" onclick="spShow('1')" id="spNav-1">
-                <div class="sp-nav-icon"><i class="fas fa-envelope"></i></div>
-                <span class="sp-nav-text">Email Monitoring</span>
+              {% for svc in package_services %}
+              <div class="sp-nav-item{% if forloop.first %} active{% endif %}" onclick="spShow('{{ svc.id }}')" id="spNav-{{ svc.id }}">
+                <div class="sp-nav-icon"><i class="fas {{ svc.icon }}"></i></div>
+                <span class="sp-nav-text">{{ svc.name|truncatewords:4 }}</span>
               </div>
-              <div class="sp-nav-item" onclick="spShow('2')" id="spNav-2">
-                <div class="sp-nav-icon"><i class="fas fa-pen-nib"></i></div>
-                <span class="sp-nav-text">Content Engine</span>
-              </div>
-              <div class="sp-nav-item" onclick="spShow('2a')" id="spNav-2a">
-                <div class="sp-nav-icon"><i class="fas fa-hashtag"></i></div>
-                <span class="sp-nav-text">Social Media</span>
-              </div>
-              <div class="sp-nav-item" onclick="spShow('2b')" id="spNav-2b">
-                <div class="sp-nav-icon"><i class="fas fa-ad"></i></div>
-                <span class="sp-nav-text">Automated Ads</span>
-              </div>
-              <div class="sp-nav-item" onclick="spShow('3')" id="spNav-3">
-                <div class="sp-nav-icon"><i class="fas fa-user-plus"></i></div>
-                <span class="sp-nav-text">Lead & CRM</span>
-              </div>
-              <div class="sp-nav-item" onclick="spShow('3a')" id="spNav-3a">
-                <div class="sp-nav-icon"><i class="fas fa-phone-alt"></i></div>
-                <span class="sp-nav-text">Voice AI</span>
-              </div>
-              <div class="sp-nav-item" onclick="spShow('3b')" id="spNav-3b">
-                <div class="sp-nav-icon"><i class="fas fa-comment-dots"></i></div>
-                <span class="sp-nav-text">Chatbot</span>
-              </div>
-              <div class="sp-nav-item" onclick="spShow('4')" id="spNav-4">
-                <div class="sp-nav-icon"><i class="fas fa-calendar-check"></i></div>
-                <span class="sp-nav-text">Call Prep</span>
-              </div>
-              <div class="sp-nav-item" onclick="spShow('5')" id="spNav-5">
-                <div class="sp-nav-icon"><i class="fas fa-clipboard-list"></i></div>
-                <span class="sp-nav-text">Post-Call Recap</span>
-              </div>
+              {% endfor %}
             </nav>
             <div class="sp-rail-foot">
               <button class="sp-foot-btn sp-foot-btn--primary" onclick="spCopyAll()">
@@ -520,411 +490,55 @@
               </button>
             </div>
           </aside>
-        
+
           <!-- MAIN -->
           <div class="sp-main">
-        
-            <!-- Progress strip -->
             <div class="sp-strip" id="spStrip">
-              <div class="sp-step active" onclick="spShow('1')" data-id="1"><div class="sp-step-num">1</div>Email</div>
-              <div class="sp-step" onclick="spShow('2')" data-id="2"><div class="sp-step-num">2</div>Content</div>
-              <div class="sp-step" onclick="spShow('2a')" data-id="2a"><div class="sp-step-num">2A</div>Social</div>
-              <div class="sp-step" onclick="spShow('2b')" data-id="2b"><div class="sp-step-num">2B</div>Ads</div>
-              <div class="sp-step" onclick="spShow('3')" data-id="3"><div class="sp-step-num">3</div>CRM</div>
-              <div class="sp-step" onclick="spShow('3a')" data-id="3a"><div class="sp-step-num">3A</div>Voice</div>
-              <div class="sp-step" onclick="spShow('3b')" data-id="3b"><div class="sp-step-num">3B</div>Chat</div>
-              <div class="sp-step" onclick="spShow('4')" data-id="4"><div class="sp-step-num">4</div>Prep</div>
-              <div class="sp-step" onclick="spShow('5')" data-id="5"><div class="sp-step-num">5</div>Recap</div>
+              {% for svc in package_services %}
+              <div class="sp-step{% if forloop.first %} active{% endif %}" onclick="spShow('{{ svc.id }}')" data-id="{{ svc.id }}"><div class="sp-step-num">{{ svc.id }}</div>{{ svc.name|truncatewords:2 }}</div>
+              {% endfor %}
             </div>
-        
-            <!-- Scroll container -->
+
             <div class="sp-scroll" id="spScroll">
-        
-              <!-- Tip bar -->
-              
-        
-              <!-- ── WORKFLOW 1 ───────────────────────────── -->
-              <div class="sp-view active" id="spView-1">
+              {% for svc in package_services %}
+              <div class="sp-view{% if forloop.first %} active{% endif %}" id="spView-{{ svc.id }}">
                 <div class="sp-hero">
                   <div class="sp-hero-top">
                     <div>
-                      <div class="sp-wf-tag"><i class="fas fa-envelope"></i> Workflow 1</div>
-                      <div class="sp-wf-title">AI Email Monitoring & Drafted Responses</div>
+                      <div class="sp-wf-tag"><i class="fas {{ svc.icon }}"></i> Package {{ svc.id }}</div>
+                      <div class="sp-wf-title">{{ svc.name }}</div>
                     </div>
                     <div class="sp-hero-nav">
-                      <button class="sp-nav-arrow" onclick="spPrev()" disabled id="spPrev-1"><i class="fas fa-chevron-left"></i></button>
-                      <button class="sp-nav-arrow" onclick="spNext()"><i class="fas fa-chevron-right"></i></button>
+                      <button class="sp-nav-arrow" onclick="spPrev()" {% if forloop.first %}disabled{% endif %} id="spPrev-{{ svc.id }}"><i class="fas fa-chevron-left"></i></button>
+                      <button class="sp-nav-arrow" onclick="spNext()" {% if forloop.last %}disabled{% endif %}><i class="fas fa-chevron-right"></i></button>
                     </div>
                   </div>
                   <div class="sp-benefit-bar">
-                    <div class="sp-benefit-icon"><i class="fas fa-bolt"></i></div>
-                    <div><div class="sp-benefit-label">Core Benefit</div>
-                    <div class="sp-benefit-text">Reclaim 1–2 hours daily by eliminating inbox overload and decision fatigue.</div></div>
+                    <div class="sp-benefit-icon"><i class="fas {{ svc.icon }}"></i></div>
+                    <div><div class="sp-benefit-label">Key Benefit</div>
+                    <div class="sp-benefit-text">{{ svc.benefit }}</div></div>
                   </div>
                 </div>
                 <div class="sp-two-col">
                   <div class="sp-card">
                     <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
                     <div class="sp-card-body"><div class="sp-feat-list">
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Real-Time Monitoring</div><div class="sp-feat-desc">Connects to Gmail or Outlook to read incoming mail.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">AI Classification</div><div class="sp-feat-desc">Filters emails by priority and determines if a response is required.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Smart Drafting</div><div class="sp-feat-desc">Generates professional replies in the client's specific brand voice.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Human Control</div><div class="sp-feat-desc">Saves drafts for final review — nothing sends without approval.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Priority Tagging</div><div class="sp-feat-desc">Alerts users to urgent messages so nothing gets lost.</div></div></div>
+                      {% for feat in svc.features %}
+                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">{{ feat.0 }}</div><div class="sp-feat-desc">{{ feat.1 }}</div></div></div>
+                      {% endfor %}
                     </div></div>
                   </div>
                   <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span class="sp-card-hint">Click to copy</span></div>
+                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-bullhorn"></i> Advantages</div><span class="sp-card-hint">Click to copy</span></div>
                     <div class="sp-card-body"><div class="sp-pitch-list">
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Imagine having a personal executive assistant who reads every email and writes 90% of the response for you—for a fraction of the cost."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Stop starting from a blank page. Our AI drafts the reply so you just have to click 'Send'."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Eliminate 'Inbox Anxiety.' You'll never have to wonder if you missed an urgent client request again."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"This system saves you up to 10 hours a week—that is an entire workday given back to you every single week."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"It doesn't rob you of control; it gives you options. You always have the final say, but the heavy lifting is done for you."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
+                      {% for adv in svc.advantages %}
+                      <div class="sp-pitch" onclick="spCopyPitch(this)">"{{ adv }}"<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
+                      {% endfor %}
                     </div></div>
                   </div>
                 </div>
               </div>
-        
-              <!-- ── WORKFLOW 2 ───────────────────────────── -->
-              <div class="sp-view" id="spView-2">
-                <div class="sp-hero">
-                  <div class="sp-hero-top">
-                    <div>
-                      <div class="sp-wf-tag"><i class="fas fa-pen-nib"></i> Workflow 2</div>
-                      <div class="sp-wf-title">Idea → Ready-to-Post Content Engine</div>
-                    </div>
-                    <div class="sp-hero-nav">
-                      <button class="sp-nav-arrow" onclick="spPrev()"><i class="fas fa-chevron-left"></i></button>
-                      <button class="sp-nav-arrow" onclick="spNext()"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                  </div>
-                  <div class="sp-benefit-bar">
-                    <div class="sp-benefit-icon"><i class="fas fa-magic"></i></div>
-                    <div><div class="sp-benefit-label">Core Benefit</div>
-                    <div class="sp-benefit-text">Remove content paralysis by turning raw ideas into consistent social media output.</div></div>
-                  </div>
-                </div>
-                <div class="sp-two-col">
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-                    <div class="sp-card-body"><div class="sp-feat-list">
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Multi-Format Capture</div><div class="sp-feat-desc">Accepts text input, forms, or voice notes.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">AI Content Generation</div><div class="sp-feat-desc">Converts one idea into captions and posts for multiple platforms.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Platform Optimization</div><div class="sp-feat-desc">Automatically formats for Instagram, Facebook, and LinkedIn.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Auto-Scheduling</div><div class="sp-feat-desc">Queues and publishes content based on optimal timing.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Brand Voice Alignment</div><div class="sp-feat-desc">Ensures every post sounds exactly like the client.</div></div></div>
-                    </div></div>
-                  </div>
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span class="sp-card-hint">Click to copy</span></div>
-                    <div class="sp-card-body"><div class="sp-pitch-list">
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Turn your commute into your marketing department. Just speak a thought into your phone, and the system turns it into a week's worth of posts."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Consistency builds trust, but it's hard to maintain. This tool ensures you show up on social media every day, even when you're on vacation."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Stop struggling with 'Writer's Block.' One raw idea becomes 3 to 5 pieces of polished content automatically."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"You don't need to be a social media expert to look like one. The AI handles the hashtags, formatting, and scheduling for you."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Get the visibility of a full marketing team without the overhead costs."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                    </div></div>
-                  </div>
-                </div>
-              </div>
-        
-              <!-- ── WORKFLOW 2A ──────────────────────────── -->
-              <div class="sp-view" id="spView-2a">
-                <div class="sp-hero">
-                  <div class="sp-hero-top">
-                    <div>
-                      <div class="sp-wf-tag"><i class="fas fa-hashtag"></i> Workflow 2A</div>
-                      <div class="sp-wf-title">Automated Social Media (Maintenance)</div>
-                    </div>
-                    <div class="sp-hero-nav">
-                      <button class="sp-nav-arrow" onclick="spPrev()"><i class="fas fa-chevron-left"></i></button>
-                      <button class="sp-nav-arrow" onclick="spNext()"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                  </div>
-                  <div class="sp-benefit-bar">
-                    <div class="sp-benefit-icon"><i class="fas fa-shield-alt"></i></div>
-                    <div><div class="sp-benefit-label">Core Benefit</div>
-                    <div class="sp-benefit-text">Maintain a consistent, professional online presence without daily effort.</div></div>
-                  </div>
-                </div>
-                <div class="sp-two-col">
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-                    <div class="sp-card-body"><div class="sp-feat-list">
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Voice-to-Post</div><div class="sp-feat-desc">Turns raw voice messages into polished content.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Cross-Platform Generation</div><div class="sp-feat-desc">Creates posts for Instagram, Facebook, and LinkedIn simultaneously.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Automated Scheduling</div><div class="sp-feat-desc">Handles the calendar and posting times automatically.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Brand Consistency</div><div class="sp-feat-desc">Maintains specific messaging and tone across all channels.</div></div></div>
-                    </div></div>
-                  </div>
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span class="sp-card-hint">Click to copy</span></div>
-                    <div class="sp-card-body"><div class="sp-pitch-list">
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"This is your baseline insurance policy for visibility—you will never 'go dark' on social media again."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Free yourself from the daily grind of logging in to post. The system handles the logistics so you can focus on your business."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Expand your reach instantly. We take one piece of content and format it perfectly for every major platform."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Your brand voice remains consistent 100% of the time, ensuring your audience always recognizes you."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"It's not just about posting; it's about freeing up your mental bandwidth for high-revenue activities."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                    </div></div>
-                  </div>
-                </div>
-              </div>
-        
-              <!-- ── WORKFLOW 2B ──────────────────────────── -->
-              <div class="sp-view" id="spView-2b">
-                <div class="sp-hero">
-                  <div class="sp-hero-top">
-                    <div>
-                      <div class="sp-wf-tag"><i class="fas fa-ad"></i> Workflow 2B</div>
-                      <div class="sp-wf-title">Automated Ads (Paid Media)</div>
-                    </div>
-                    <div class="sp-hero-nav">
-                      <button class="sp-nav-arrow" onclick="spPrev()"><i class="fas fa-chevron-left"></i></button>
-                      <button class="sp-nav-arrow" onclick="spNext()"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                  </div>
-                  <div class="sp-benefit-bar">
-                    <div class="sp-benefit-icon"><i class="fas fa-chart-line"></i></div>
-                    <div><div class="sp-benefit-label">Core Benefit</div>
-                    <div class="sp-benefit-text">Launch and improve high-converting ad campaigns without constant manual tweaking.</div></div>
-                  </div>
-                </div>
-                <div class="sp-two-col">
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-                    <div class="sp-card-body"><div class="sp-feat-list">
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Auto-Copywriting</div><div class="sp-feat-desc">Generates ad copy and headlines automatically.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Variation Testing</div><div class="sp-feat-desc">Creates multiple variations to test what works best.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Data Optimization</div><div class="sp-feat-desc">Refines messaging based on performance data.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Multi-Platform Support</div><div class="sp-feat-desc">Supports Meta (Facebook/Instagram) and Google ad platforms.</div></div></div>
-                    </div></div>
-                  </div>
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span class="sp-card-hint">Click to copy</span></div>
-                    <div class="sp-card-body"><div class="sp-pitch-list">
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Stop burning budget on bad ads. The AI creates multiple variations to find the winner faster than a human could."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"You don't need to hire an expensive agency to run effective ads. This system handles the creative heavy lifting."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Launch campaigns in minutes, not days. From offer input to deployment, the process is streamlined."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"The system learns what works. It uses performance data to continuously optimize your messaging."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Scale your revenue by automating the hardest part of paid ads: writing copy that actually converts."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                    </div></div>
-                  </div>
-                </div>
-              </div>
-        
-              <!-- ── WORKFLOW 3 ───────────────────────────── -->
-              <div class="sp-view" id="spView-3">
-                <div class="sp-hero">
-                  <div class="sp-hero-top">
-                    <div>
-                      <div class="sp-wf-tag"><i class="fas fa-user-plus"></i> Workflow 3</div>
-                      <div class="sp-wf-title">Lead Intake → AI Qualification → CRM Automation</div>
-                    </div>
-                    <div class="sp-hero-nav">
-                      <button class="sp-nav-arrow" onclick="spPrev()"><i class="fas fa-chevron-left"></i></button>
-                      <button class="sp-nav-arrow" onclick="spNext()"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                  </div>
-                  <div class="sp-benefit-bar">
-                    <div class="sp-benefit-icon"><i class="fas fa-crosshairs"></i></div>
-                    <div><div class="sp-benefit-label">Core Benefit</div>
-                    <div class="sp-benefit-text">Ensure every lead gets the right response at the right time.</div></div>
-                  </div>
-                </div>
-                <div class="sp-two-col">
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-                    <div class="sp-card-body"><div class="sp-feat-list">
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Universal Capture</div><div class="sp-feat-desc">Consolidates leads from websites, chat, and forms.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">AI Scoring</div><div class="sp-feat-desc">Classifies leads based on quality and intent.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Instant Engagement</div><div class="sp-feat-desc">Triggers immediate follow-ups via email or SMS.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">CRM Hygiene</div><div class="sp-feat-desc">Automatically updates pipeline stages and contact details.</div></div></div>
-                    </div></div>
-                  </div>
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span class="sp-card-hint">Click to copy</span></div>
-                    <div class="sp-card-body"><div class="sp-pitch-list">
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"The '5-minute rule' is real—leads who get a response instantly are significantly more likely to close. Our system responds instantly."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Stop chasing 'tire kickers.' The AI qualifies the lead for you, so you only spend time on people ready to buy."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"We eliminate data entry. No more copying and pasting lead details into a spreadsheet; it appears in your CRM automatically."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Your pipeline stays up to date automatically, giving you a clear view of your revenue potential at all times."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"This is your 'safety net' for revenue. We ensure no potential customer ever slips through the cracks."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                    </div></div>
-                  </div>
-                </div>
-              </div>
-        
-              <!-- ── WORKFLOW 3A ──────────────────────────── -->
-              <div class="sp-view" id="spView-3a">
-                <div class="sp-hero">
-                  <div class="sp-hero-top">
-                    <div>
-                      <div class="sp-wf-tag"><i class="fas fa-phone-alt"></i> Workflow 3A</div>
-                      <div class="sp-wf-title">Automated Voice AI</div>
-                    </div>
-                    <div class="sp-hero-nav">
-                      <button class="sp-nav-arrow" onclick="spPrev()"><i class="fas fa-chevron-left"></i></button>
-                      <button class="sp-nav-arrow" onclick="spNext()"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                  </div>
-                  <div class="sp-benefit-bar">
-                    <div class="sp-benefit-icon"><i class="fas fa-moon"></i></div>
-                    <div><div class="sp-benefit-label">Core Benefit</div>
-                    <div class="sp-benefit-text">Ensure no call goes unanswered and every inquiry is handled professionally 24/7.</div></div>
-                  </div>
-                </div>
-                <div class="sp-two-col">
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-                    <div class="sp-card-body"><div class="sp-feat-list">
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Natural Voice Assistant</div><div class="sp-feat-desc">Answers incoming calls with a human-sounding AI.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Intent Capture</div><div class="sp-feat-desc">Listens to the caller to understand their needs.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Auto-Qualification</div><div class="sp-feat-desc">Asks questions to qualify leads in real-time.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Smart Routing</div><div class="sp-feat-desc">Directs calls or triggers follow-ups based on the conversation.</div></div></div>
-                    </div></div>
-                  </div>
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span class="sp-card-hint">Click to copy</span></div>
-                    <div class="sp-card-body"><div class="sp-pitch-list">
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Your business is now open 24 hours a day. Whether a lead calls at 2 PM or 2 AM, they get a professional response."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Never miss a customized opportunity just because you were on another line or in a meeting."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Give your business a 'Fortune 500' feel with a professional AI receptionist that costs less than a phone bill."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"The AI filters the noise. It captures the details so you only have to call back the qualified leads."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Capture revenue while you sleep. The AI can take orders, book appointments, or capture leads overnight."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                    </div></div>
-                  </div>
-                </div>
-              </div>
-        
-              <!-- ── WORKFLOW 3B ──────────────────────────── -->
-              <div class="sp-view" id="spView-3b">
-                <div class="sp-hero">
-                  <div class="sp-hero-top">
-                    <div>
-                      <div class="sp-wf-tag"><i class="fas fa-comment-dots"></i> Workflow 3B</div>
-                      <div class="sp-wf-title">Automated Chatbot</div>
-                    </div>
-                    <div class="sp-hero-nav">
-                      <button class="sp-nav-arrow" onclick="spPrev()"><i class="fas fa-chevron-left"></i></button>
-                      <button class="sp-nav-arrow" onclick="spNext()"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                  </div>
-                  <div class="sp-benefit-bar">
-                    <div class="sp-benefit-icon"><i class="fas fa-rocket"></i></div>
-                    <div><div class="sp-benefit-label">Core Benefit</div>
-                    <div class="sp-benefit-text">Provide instant responses to website and social media inquiries to boost conversion.</div></div>
-                  </div>
-                </div>
-                <div class="sp-two-col">
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-                    <div class="sp-card-body"><div class="sp-feat-list">
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Instant Replies</div><div class="sp-feat-desc">Responds immediately to common questions from visitors.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Conversational Qualification</div><div class="sp-feat-desc">Qualifies leads through natural conversation rather than static forms.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Action Execution</div><div class="sp-feat-desc">Books appointments or routes inquiries to specific team members.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Omni-Channel Support</div><div class="sp-feat-desc">Works across Website, Messenger, and WhatsApp.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">24/7 Availability</div><div class="sp-feat-desc">Ensures no inquiry is missed regardless of time of day.</div></div></div>
-                    </div></div>
-                  </div>
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span class="sp-card-hint">Click to copy</span></div>
-                    <div class="sp-card-body"><div class="sp-pitch-list">
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Capture revenue 24/7. Your website becomes a lead generation machine that never sleeps, capturing interest even when you are offline."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Speed wins. By responding instantly to inquiries, you drastically increase the chance of converting a visitor into a client."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Stop answering the same repetitive questions. The AI handles the FAQs so you can focus on complex sales conversations."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Meet your customers where they are. Whether they message on Facebook, WhatsApp, or your site, they get an instant, professional reply."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Turn traffic into appointments. The bot doesn't just chat; it qualifies visitors and books meetings directly on your calendar."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                    </div></div>
-                  </div>
-                </div>
-              </div>
-        
-              <!-- ── WORKFLOW 4 ───────────────────────────── -->
-              <div class="sp-view" id="spView-4">
-                <div class="sp-hero">
-                  <div class="sp-hero-top">
-                    <div>
-                      <div class="sp-wf-tag"><i class="fas fa-calendar-check"></i> Workflow 4</div>
-                      <div class="sp-wf-title">Appointment Booked → AI Call Preparation</div>
-                    </div>
-                    <div class="sp-hero-nav">
-                      <button class="sp-nav-arrow" onclick="spPrev()"><i class="fas fa-chevron-left"></i></button>
-                      <button class="sp-nav-arrow" onclick="spNext()"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                  </div>
-                  <div class="sp-benefit-bar">
-                    <div class="sp-benefit-icon"><i class="fas fa-trophy"></i></div>
-                    <div><div class="sp-benefit-label">Core Benefit</div>
-                    <div class="sp-benefit-text">Dramatically increase close rates by showing up to every meeting fully prepared.</div></div>
-                  </div>
-                </div>
-                <div class="sp-two-col">
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-                    <div class="sp-card-body"><div class="sp-feat-list">
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Appointment Detection</div><div class="sp-feat-desc">Automatically recognizes when a sales call is booked.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">History Retrieval</div><div class="sp-feat-desc">Pulls CRM data and past conversation history.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">AI Briefing</div><div class="sp-feat-desc">Generates a pre-call agenda, objectives, and talking points.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Objection Handling</div><div class="sp-feat-desc">Predicts potential client objections and provides scripts.</div></div></div>
-                    </div></div>
-                  </div>
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span class="sp-card-hint">Click to copy</span></div>
-                    <div class="sp-card-body"><div class="sp-pitch-list">
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Never walk into a meeting cold again. You will have a 'cheat sheet' for every prospect delivered to you before the call."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Impress your clients by knowing every detail of their history without having to dig through old emails."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Confidence closes deals. This tool gives you the talking points and objection handlers you need to control the conversation."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Standardize your sales success. Even your newest rep will prep like a seasoned pro with these AI briefings."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"It's like having a sales manager whisper the winning strategy in your ear right before you pick up the phone."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                    </div></div>
-                  </div>
-                </div>
-              </div>
-        
-              <!-- ── WORKFLOW 5 ───────────────────────────── -->
-              <div class="sp-view" id="spView-5">
-                <div class="sp-hero">
-                  <div class="sp-hero-top">
-                    <div>
-                      <div class="sp-wf-tag"><i class="fas fa-clipboard-list"></i> Workflow 5</div>
-                      <div class="sp-wf-title">Post-Call AI Recap & Follow-Up</div>
-                    </div>
-                    <div class="sp-hero-nav">
-                      <button class="sp-nav-arrow" onclick="spPrev()"><i class="fas fa-chevron-left"></i></button>
-                      <button class="sp-nav-arrow" onclick="spNext()" disabled><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                  </div>
-                  <div class="sp-benefit-bar">
-                    <div class="sp-benefit-icon"><i class="fas fa-flag-checkered"></i></div>
-                    <div><div class="sp-benefit-label">Core Benefit</div>
-                    <div class="sp-benefit-text">Capture value from every conversation and ensure strong follow-through.</div></div>
-                  </div>
-                </div>
-                <div class="sp-two-col">
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-                    <div class="sp-card-body"><div class="sp-feat-list">
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Transcription</div><div class="sp-feat-desc">Records and transcribes the sales call.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">AI Summarization</div><div class="sp-feat-desc">Extracts key decisions, action items, and next steps.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Drafted Follow-Up</div><div class="sp-feat-desc">Writes a personalized follow-up email to the client.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">CRM Updates</div><div class="sp-feat-desc">Automatically logs notes and tasks in the CRM.</div></div></div>
-                      <div class="sp-feat"><div class="sp-feat-dot"></div><div><div class="sp-feat-label">Deal Tracking</div><div class="sp-feat-desc">Ensures momentum isn't lost if the deal doesn't close immediately.</div></div></div>
-                    </div></div>
-                  </div>
-                  <div class="sp-card">
-                    <div class="sp-card-head"><div class="sp-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span class="sp-card-hint">Click to copy</span></div>
-                    <div class="sp-card-body"><div class="sp-pitch-list">
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"The fortune is in the follow-up. This system ensures you send a perfect summary email minutes after hanging up."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Stop spending your Friday afternoon updating your CRM. The AI logs every call and note for you automatically."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Make your clients feel heard. Sending a detailed summary of your conversation proves you were listening and care about their needs."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"Eliminate the 'What did we agree on?' confusion. You and the client get a clear record of next steps every single time."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                      <div class="sp-pitch" onclick="spCopyPitch(this)">"This closes the loop on your sales process, ensuring that the momentum you built on the call translates into signed deals."<div class="sp-copy-badge"><i class="fas fa-copy"></i></div></div>
-                    </div></div>
-                  </div>
-                </div>
-              </div>
-        
+              {% endfor %}
             </div><!-- /sp-scroll -->
           </div><!-- /sp-main -->
         
@@ -935,8 +549,8 @@
         
         <script>
         (function() {
-          const ORDER = ['1','2','2a','2b','3','3a','3b','4','5'];
-          let spCurrent = '1';
+          const ORDER = [{% for svc in package_services %}'{{ svc.id }}'{% if not forloop.last %},{% endif %}{% endfor %}];
+          let spCurrent = '{{ package_services.0.id }}';
           let spRailCollapsed = false;
         
           window.spShow = function(id) {
@@ -987,12 +601,12 @@
           };
         
           window.spCopyAll = function() {
-            let out = 'AI Business OS — Sales Pitch v2\n\n';
+            let out = 'Package Services — Sales Pitch\n\n';
             ORDER.forEach(id => {
               const v = document.getElementById('spView-' + id);
               if (!v) return;
               out += (v.querySelector('.sp-wf-title')?.innerText || '') + '\n';
-              out += 'Benefit: ' + (v.querySelector('.sp-benefit-text')?.innerText || '') + '\n\nPitch Points:\n';
+              out += 'Benefit: ' + (v.querySelector('.sp-benefit-text')?.innerText || '') + '\n\nAdvantages:\n';
               v.querySelectorAll('.sp-pitch').forEach(p => {
                 out += p.childNodes[0].textContent.trim() + '\n';
               });

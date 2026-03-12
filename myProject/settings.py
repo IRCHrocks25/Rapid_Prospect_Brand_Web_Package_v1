@@ -30,8 +30,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'internalworkflow-production.up.railw
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
-    'https://internalworkflow-production.up.railway.app',
-    'https://rapidprospectinternalworkflow-production.up.railway.app',
+    'https://rapidprospectbrandwebpackagev1-production.up.railway.app',
 ]
 
 # Application definition

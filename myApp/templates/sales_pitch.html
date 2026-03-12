@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}AI Business OS — Sales Pitch v2{% endblock %}
+{% block title %}Package Services — Sales Pitch{% endblock %}
 
 {% block navigation %}{% endblock %}
 {% block footer %}{% endblock %}
@@ -355,58 +355,18 @@
     <div class="sidebar-search">
       <div class="search-input-wrap">
         <i class="fas fa-search search-icon"></i>
-        <input class="search-input" type="text" placeholder="Search workflows…" id="searchInput" oninput="filterNav(this.value)">
+        <input class="search-input" type="text" placeholder="Search packages…" id="searchInput" oninput="filterNav(this.value)">
       </div>
     </div>
 
     <nav class="sidebar-nav">
-      <div class="nav-group-label">All Workflows</div>
-
-      <a class="nav-item active" onclick="showWorkflow('1')" id="nav-1">
-        <div class="nav-item-icon"><i class="fas fa-envelope"></i></div>
-        <span class="nav-item-text">Email Monitoring</span>
-        <span class="nav-badge">5</span>
+      <div class="nav-group-label">Package Services</div>
+      {% for svc in package_services %}
+      <a class="nav-item{% if forloop.first %} active{% endif %}" onclick="showWorkflow('{{ svc.id }}')" id="nav-{{ svc.id }}">
+        <div class="nav-item-icon"><i class="fas {{ svc.icon }}"></i></div>
+        <span class="nav-item-text">{{ svc.name|truncatewords:5 }}</span>
       </a>
-      <a class="nav-item" onclick="showWorkflow('2')" id="nav-2">
-        <div class="nav-item-icon"><i class="fas fa-pen-nib"></i></div>
-        <span class="nav-item-text">Content Engine</span>
-        <span class="nav-badge">5</span>
-      </a>
-      <a class="nav-item" onclick="showWorkflow('2a')" id="nav-2a">
-        <div class="nav-item-icon"><i class="fas fa-hashtag"></i></div>
-        <span class="nav-item-text">Social Media</span>
-        <span class="nav-badge">5</span>
-      </a>
-      <a class="nav-item" onclick="showWorkflow('2b')" id="nav-2b">
-        <div class="nav-item-icon"><i class="fas fa-ad"></i></div>
-        <span class="nav-item-text">Automated Ads</span>
-        <span class="nav-badge">5</span>
-      </a>
-      <a class="nav-item" onclick="showWorkflow('3')" id="nav-3">
-        <div class="nav-item-icon"><i class="fas fa-user-plus"></i></div>
-        <span class="nav-item-text">Lead Intake & CRM</span>
-        <span class="nav-badge">5</span>
-      </a>
-      <a class="nav-item" onclick="showWorkflow('3a')" id="nav-3a">
-        <div class="nav-item-icon"><i class="fas fa-phone-alt"></i></div>
-        <span class="nav-item-text">Voice AI</span>
-        <span class="nav-badge">5</span>
-      </a>
-      <a class="nav-item" onclick="showWorkflow('3b')" id="nav-3b">
-        <div class="nav-item-icon"><i class="fas fa-comment-dots"></i></div>
-        <span class="nav-item-text">Chatbot</span>
-        <span class="nav-badge">5</span>
-      </a>
-      <a class="nav-item" onclick="showWorkflow('4')" id="nav-4">
-        <div class="nav-item-icon"><i class="fas fa-calendar-check"></i></div>
-        <span class="nav-item-text">Call Preparation</span>
-        <span class="nav-badge">5</span>
-      </a>
-      <a class="nav-item" onclick="showWorkflow('5')" id="nav-5">
-        <div class="nav-item-icon"><i class="fas fa-clipboard-list"></i></div>
-        <span class="nav-item-text">Post-Call Recap</span>
-        <span class="nav-badge">5</span>
-      </a>
+      {% endfor %}
     </nav>
 
     <div class="sidebar-footer">
@@ -419,8 +379,8 @@
   <div class="main">
     <div class="topbar">
       <div class="topbar-left">
-        <div class="topbar-title" id="topbarTitle">Workflow 1: AI Email Monitoring</div>
-        <div class="topbar-sub">Benefit-first · Features second · Close with proof</div>
+        <div class="topbar-title" id="topbarTitle">Package 1: {{ package_services.0.name }}</div>
+        <div class="topbar-sub">Benefit-first · Features · Objection handling</div>
       </div>
       <div class="topbar-actions">
         <button class="action-btn" onclick="copyCurrentPitch()"><i class="fas fa-copy"></i> Copy Pitch</button>
@@ -433,42 +393,33 @@
     <!-- Breadcrumb progress strip -->
     <div class="progress-bar-wrap">
       <div class="progress-bar" id="progressBar">
-        <div class="progress-step active" onclick="showWorkflow('1')" data-wf="1"><div class="step-num">1</div>Email</div>
-        <div class="progress-step" onclick="showWorkflow('2')" data-wf="2"><div class="step-num">2</div>Content</div>
-        <div class="progress-step" onclick="showWorkflow('2a')" data-wf="2a"><div class="step-num">2A</div>Social</div>
-        <div class="progress-step" onclick="showWorkflow('2b')" data-wf="2b"><div class="step-num">2B</div>Ads</div>
-        <div class="progress-step" onclick="showWorkflow('3')" data-wf="3"><div class="step-num">3</div>CRM</div>
-        <div class="progress-step" onclick="showWorkflow('3a')" data-wf="3a"><div class="step-num">3A</div>Voice AI</div>
-        <div class="progress-step" onclick="showWorkflow('3b')" data-wf="3b"><div class="step-num">3B</div>Chatbot</div>
-        <div class="progress-step" onclick="showWorkflow('4')" data-wf="4"><div class="step-num">4</div>Prep</div>
-        <div class="progress-step" onclick="showWorkflow('5')" data-wf="5"><div class="step-num">5</div>Recap</div>
+        {% for svc in package_services %}
+        <div class="progress-step{% if forloop.first %} active{% endif %}" onclick="showWorkflow('{{ svc.id }}')" data-wf="{{ svc.id }}"><div class="step-num">{{ svc.id }}</div>{{ svc.name|truncatewords:2 }}</div>
+        {% endfor %}
       </div>
     </div>
 
     <div class="content-area" id="contentArea">
-
-      
-
-      <!-- ─── WORKFLOW 1 ─────────────────────── -->
-      <div class="workflow-view active" id="wf-1">
+      {% for svc in package_services %}
+      <div class="workflow-view{% if forloop.first %} active{% endif %}" id="wf-{{ svc.id }}">
         <div class="workflow-hero">
           <div class="workflow-hero-top">
             <div class="workflow-hero-left">
-              <div class="workflow-number"><i class="fas fa-envelope"></i> Workflow 1</div>
-              <h1 class="workflow-hero-title">AI Email Monitoring & Drafted Responses</h1>
+              <div class="workflow-number"><i class="fas {{ svc.icon }}"></i> Package {{ svc.id }}</div>
+              <h1 class="workflow-hero-title">{{ svc.name }}</h1>
             </div>
             <div class="workflow-hero-right">
               <div class="workflow-nav-btns">
-                <button class="wf-nav-btn" onclick="prevWorkflow()" disabled id="prevBtn-1" title="Previous"><i class="fas fa-chevron-left"></i></button>
-                <button class="wf-nav-btn" onclick="nextWorkflow()" title="Next"><i class="fas fa-chevron-right"></i></button>
+                <button class="wf-nav-btn" onclick="prevWorkflow()" {% if forloop.first %}disabled{% endif %} id="prevBtn-{{ svc.id }}" title="Previous"><i class="fas fa-chevron-left"></i></button>
+                <button class="wf-nav-btn" onclick="nextWorkflow()" {% if forloop.last %}disabled{% endif %} title="Next"><i class="fas fa-chevron-right"></i></button>
               </div>
             </div>
           </div>
           <div class="workflow-benefit-bar">
-            <div class="benefit-icon"><i class="fas fa-bolt"></i></div>
+            <div class="benefit-icon"><i class="fas {{ svc.icon }}"></i></div>
             <div class="benefit-content">
-              <div class="benefit-label">Core Benefit</div>
-              <div class="benefit-text">Reclaim 1–2 hours daily by eliminating inbox overload and decision fatigue.</div>
+              <div class="benefit-label">Key Benefit</div>
+              <div class="benefit-text">{{ svc.benefit }}</div>
             </div>
           </div>
         </div>
@@ -479,386 +430,28 @@
             </div>
             <div class="panel-card-body">
               <div class="feature-grid">
-                <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Real-Time Monitoring</div><div class="feat-desc">Connects to Gmail or Outlook to read incoming mail.</div></div></div>
-                <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">AI Classification</div><div class="feat-desc">Filters emails by priority and determines if a response is required.</div></div></div>
-                <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Smart Drafting</div><div class="feat-desc">Generates professional replies in the client's specific brand voice.</div></div></div>
-                <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Human Control</div><div class="feat-desc">Saves drafts for final review — nothing sends without approval.</div></div></div>
-                <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Priority Tagging</div><div class="feat-desc">Alerts users to urgent messages so nothing gets lost.</div></div></div>
+                {% for feat in svc.features %}
+                <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">{{ feat.0 }}</div><div class="feat-desc">{{ feat.1 }}</div></div></div>
+                {% endfor %}
               </div>
             </div>
           </div>
           <div class="panel-card">
             <div class="panel-card-header">
-              <div class="panel-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div>
+              <div class="panel-card-title"><i class="fas fa-bullhorn"></i> Advantages (Objection Handling)</div>
               <span style="font-size:0.72rem;color:var(--muted);font-weight:500;">Click to copy</span>
             </div>
             <div class="panel-card-body">
               <div class="pitch-list">
-                <div class="pitch-item" onclick="copyPitch(this)">"Imagine having a personal executive assistant who reads every email and writes 90% of the response for you—for a fraction of the cost."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-                <div class="pitch-item" onclick="copyPitch(this)">"Stop starting from a blank page. Our AI drafts the reply so you just have to click 'Send'."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-                <div class="pitch-item" onclick="copyPitch(this)">"Eliminate 'Inbox Anxiety.' You'll never have to wonder if you missed an urgent client request again."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-                <div class="pitch-item" onclick="copyPitch(this)">"This system saves you up to 10 hours a week—that is an entire workday given back to you every single week."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-                <div class="pitch-item" onclick="copyPitch(this)">"It doesn't rob you of control; it gives you options. You always have the final say, but the heavy lifting is done for you."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
+                {% for adv in svc.advantages %}
+                <div class="pitch-item" onclick="copyPitch(this)">"{{ adv }}"<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
+                {% endfor %}
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- ─── WORKFLOW 2 ─────────────────────── -->
-      <div class="workflow-view" id="wf-2">
-        <div class="workflow-hero">
-          <div class="workflow-hero-top">
-            <div class="workflow-hero-left">
-              <div class="workflow-number"><i class="fas fa-pen-nib"></i> Workflow 2</div>
-              <h1 class="workflow-hero-title">Idea → Ready-to-Post Content Engine</h1>
-            </div>
-            <div class="workflow-hero-right"><div class="workflow-nav-btns">
-              <button class="wf-nav-btn" onclick="prevWorkflow()"><i class="fas fa-chevron-left"></i></button>
-              <button class="wf-nav-btn" onclick="nextWorkflow()"><i class="fas fa-chevron-right"></i></button>
-            </div></div>
-          </div>
-          <div class="workflow-benefit-bar">
-            <div class="benefit-icon"><i class="fas fa-magic"></i></div>
-            <div class="benefit-content">
-              <div class="benefit-label">Core Benefit</div>
-              <div class="benefit-text">Remove content paralysis by turning raw ideas into consistent social media output.</div>
-            </div>
-          </div>
-        </div>
-        <div class="two-col">
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-            <div class="panel-card-body"><div class="feature-grid">
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Multi-Format Capture</div><div class="feat-desc">Accepts text input, forms, or voice notes.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">AI Content Generation</div><div class="feat-desc">Converts one idea into captions and posts for multiple platforms.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Platform Optimization</div><div class="feat-desc">Automatically formats content for Instagram, Facebook, and LinkedIn.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Auto-Scheduling</div><div class="feat-desc">Queues and publishes content based on optimal timing.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Brand Voice Alignment</div><div class="feat-desc">Ensures every post sounds exactly like the client.</div></div></div>
-            </div></div>
-          </div>
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span style="font-size:0.72rem;color:var(--muted);font-weight:500;">Click to copy</span></div>
-            <div class="panel-card-body"><div class="pitch-list">
-              <div class="pitch-item" onclick="copyPitch(this)">"Turn your commute into your marketing department. Just speak a thought into your phone, and the system turns it into a week's worth of posts."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Consistency builds trust, but it's hard to maintain. This tool ensures you show up on social media every day, even when you're on vacation."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Stop struggling with 'Writer's Block.' One raw idea becomes 3 to 5 pieces of polished content automatically."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"You don't need to be a social media expert to look like one. The AI handles the hashtags, formatting, and scheduling for you."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Get the visibility of a full marketing team without the overhead costs."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-            </div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─── WORKFLOW 2A ─────────────────────── -->
-      <div class="workflow-view" id="wf-2a">
-        <div class="workflow-hero">
-          <div class="workflow-hero-top">
-            <div class="workflow-hero-left">
-              <div class="workflow-number"><i class="fas fa-hashtag"></i> Workflow 2A</div>
-              <h1 class="workflow-hero-title">Automated Social Media (Maintenance)</h1>
-            </div>
-            <div class="workflow-hero-right"><div class="workflow-nav-btns">
-              <button class="wf-nav-btn" onclick="prevWorkflow()"><i class="fas fa-chevron-left"></i></button>
-              <button class="wf-nav-btn" onclick="nextWorkflow()"><i class="fas fa-chevron-right"></i></button>
-            </div></div>
-          </div>
-          <div class="workflow-benefit-bar">
-            <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
-            <div class="benefit-content">
-              <div class="benefit-label">Core Benefit</div>
-              <div class="benefit-text">Maintain a consistent, professional online presence without daily effort.</div>
-            </div>
-          </div>
-        </div>
-        <div class="two-col">
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-            <div class="panel-card-body"><div class="feature-grid">
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Voice-to-Post</div><div class="feat-desc">Turns raw voice messages into polished content.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Cross-Platform Generation</div><div class="feat-desc">Creates posts for Instagram, Facebook, and LinkedIn simultaneously.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Automated Scheduling</div><div class="feat-desc">Handles the calendar and posting times automatically.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Brand Consistency</div><div class="feat-desc">Maintains specific messaging and tone across all channels.</div></div></div>
-            </div></div>
-          </div>
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span style="font-size:0.72rem;color:var(--muted);font-weight:500;">Click to copy</span></div>
-            <div class="panel-card-body"><div class="pitch-list">
-              <div class="pitch-item" onclick="copyPitch(this)">"This is your baseline insurance policy for visibility—you will never 'go dark' on social media again."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Free yourself from the daily grind of logging in to post. The system handles the logistics so you can focus on your business."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Expand your reach instantly. We take one piece of content and format it perfectly for every major platform."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Your brand voice remains consistent 100% of the time, ensuring your audience always recognizes you."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"It's not just about posting; it's about freeing up your mental bandwidth for high-revenue activities."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-            </div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─── WORKFLOW 2B ─────────────────────── -->
-      <div class="workflow-view" id="wf-2b">
-        <div class="workflow-hero">
-          <div class="workflow-hero-top">
-            <div class="workflow-hero-left">
-              <div class="workflow-number"><i class="fas fa-ad"></i> Workflow 2B</div>
-              <h1 class="workflow-hero-title">Automated Ads (Paid Media)</h1>
-            </div>
-            <div class="workflow-hero-right"><div class="workflow-nav-btns">
-              <button class="wf-nav-btn" onclick="prevWorkflow()"><i class="fas fa-chevron-left"></i></button>
-              <button class="wf-nav-btn" onclick="nextWorkflow()"><i class="fas fa-chevron-right"></i></button>
-            </div></div>
-          </div>
-          <div class="workflow-benefit-bar">
-            <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
-            <div class="benefit-content">
-              <div class="benefit-label">Core Benefit</div>
-              <div class="benefit-text">Launch and improve high-converting ad campaigns without constant manual tweaking.</div>
-            </div>
-          </div>
-        </div>
-        <div class="two-col">
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-            <div class="panel-card-body"><div class="feature-grid">
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Auto-Copywriting</div><div class="feat-desc">Generates ad copy and headlines automatically.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Variation Testing</div><div class="feat-desc">Creates multiple variations to test what works best.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Data Optimization</div><div class="feat-desc">Refines messaging based on performance data.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Multi-Platform Support</div><div class="feat-desc">Supports Meta (Facebook/Instagram) and Google ad platforms.</div></div></div>
-            </div></div>
-          </div>
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span style="font-size:0.72rem;color:var(--muted);font-weight:500;">Click to copy</span></div>
-            <div class="panel-card-body"><div class="pitch-list">
-              <div class="pitch-item" onclick="copyPitch(this)">"Stop burning budget on bad ads. The AI creates multiple variations to find the winner faster than a human could."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"You don't need to hire an expensive agency to run effective ads. This system handles the creative heavy lifting."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Launch campaigns in minutes, not days. From offer input to deployment, the process is streamlined."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"The system learns what works. It uses performance data to continuously optimize your messaging."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Scale your revenue by automating the hardest part of paid ads: writing copy that actually converts."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-            </div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─── WORKFLOW 3 ─────────────────────── -->
-      <div class="workflow-view" id="wf-3">
-        <div class="workflow-hero">
-          <div class="workflow-hero-top">
-            <div class="workflow-hero-left">
-              <div class="workflow-number"><i class="fas fa-user-plus"></i> Workflow 3</div>
-              <h1 class="workflow-hero-title">Lead Intake → AI Qualification → CRM Automation</h1>
-            </div>
-            <div class="workflow-hero-right"><div class="workflow-nav-btns">
-              <button class="wf-nav-btn" onclick="prevWorkflow()"><i class="fas fa-chevron-left"></i></button>
-              <button class="wf-nav-btn" onclick="nextWorkflow()"><i class="fas fa-chevron-right"></i></button>
-            </div></div>
-          </div>
-          <div class="workflow-benefit-bar">
-            <div class="benefit-icon"><i class="fas fa-crosshairs"></i></div>
-            <div class="benefit-content">
-              <div class="benefit-label">Core Benefit</div>
-              <div class="benefit-text">Ensure every lead gets the right response at the right time.</div>
-            </div>
-          </div>
-        </div>
-        <div class="two-col">
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-            <div class="panel-card-body"><div class="feature-grid">
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Universal Capture</div><div class="feat-desc">Consolidates leads from websites, chat, and forms.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">AI Scoring</div><div class="feat-desc">Classifies leads based on quality and intent.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Instant Engagement</div><div class="feat-desc">Triggers immediate follow-ups via email or SMS.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">CRM Hygiene</div><div class="feat-desc">Automatically updates pipeline stages and contact details.</div></div></div>
-            </div></div>
-          </div>
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span style="font-size:0.72rem;color:var(--muted);font-weight:500;">Click to copy</span></div>
-            <div class="panel-card-body"><div class="pitch-list">
-              <div class="pitch-item" onclick="copyPitch(this)">"The '5-minute rule' is real—leads who get a response instantly are significantly more likely to close. Our system responds instantly."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Stop chasing 'tire kickers.' The AI qualifies the lead for you, so you only spend time on people ready to buy."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"We eliminate data entry. No more copying and pasting lead details into a spreadsheet; it appears in your CRM automatically."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Your pipeline stays up to date automatically, giving you a clear view of your revenue potential at all times."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"This is your 'safety net' for revenue. We ensure no potential customer ever slips through the cracks."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-            </div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─── WORKFLOW 3A ─────────────────────── -->
-      <div class="workflow-view" id="wf-3a">
-        <div class="workflow-hero">
-          <div class="workflow-hero-top">
-            <div class="workflow-hero-left">
-              <div class="workflow-number"><i class="fas fa-phone-alt"></i> Workflow 3A</div>
-              <h1 class="workflow-hero-title">Automated Voice AI</h1>
-            </div>
-            <div class="workflow-hero-right"><div class="workflow-nav-btns">
-              <button class="wf-nav-btn" onclick="prevWorkflow()"><i class="fas fa-chevron-left"></i></button>
-              <button class="wf-nav-btn" onclick="nextWorkflow()"><i class="fas fa-chevron-right"></i></button>
-            </div></div>
-          </div>
-          <div class="workflow-benefit-bar">
-            <div class="benefit-icon"><i class="fas fa-moon"></i></div>
-            <div class="benefit-content">
-              <div class="benefit-label">Core Benefit</div>
-              <div class="benefit-text">Ensure no call goes unanswered and every inquiry is handled professionally 24/7.</div>
-            </div>
-          </div>
-        </div>
-        <div class="two-col">
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-            <div class="panel-card-body"><div class="feature-grid">
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Natural Voice Assistant</div><div class="feat-desc">Answers incoming calls with a human-sounding AI.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Intent Capture</div><div class="feat-desc">Listens to the caller to understand their needs.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Auto-Qualification</div><div class="feat-desc">Asks questions to qualify leads in real-time.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Smart Routing</div><div class="feat-desc">Directs calls or triggers follow-ups based on the conversation.</div></div></div>
-            </div></div>
-          </div>
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span style="font-size:0.72rem;color:var(--muted);font-weight:500;">Click to copy</span></div>
-            <div class="panel-card-body"><div class="pitch-list">
-              <div class="pitch-item" onclick="copyPitch(this)">"Your business is now open 24 hours a day. Whether a lead calls at 2 PM or 2 AM, they get a professional response."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Never miss a customized opportunity just because you were on another line or in a meeting."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Give your business a 'Fortune 500' feel with a professional AI receptionist that costs less than a phone bill."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"The AI filters the noise. It captures the details so you only have to call back the qualified leads."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Capture revenue while you sleep. The AI can take orders, book appointments, or capture leads overnight."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-            </div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─── WORKFLOW 3B ─────────────────────── -->
-      <div class="workflow-view" id="wf-3b">
-        <div class="workflow-hero">
-          <div class="workflow-hero-top">
-            <div class="workflow-hero-left">
-              <div class="workflow-number"><i class="fas fa-comment-dots"></i> Workflow 3B</div>
-              <h1 class="workflow-hero-title">Automated Chatbot</h1>
-            </div>
-            <div class="workflow-hero-right"><div class="workflow-nav-btns">
-              <button class="wf-nav-btn" onclick="prevWorkflow()"><i class="fas fa-chevron-left"></i></button>
-              <button class="wf-nav-btn" onclick="nextWorkflow()"><i class="fas fa-chevron-right"></i></button>
-            </div></div>
-          </div>
-          <div class="workflow-benefit-bar">
-            <div class="benefit-icon"><i class="fas fa-rocket"></i></div>
-            <div class="benefit-content">
-              <div class="benefit-label">Core Benefit</div>
-              <div class="benefit-text">Provide instant responses to website and social media inquiries to boost conversion.</div>
-            </div>
-          </div>
-        </div>
-        <div class="two-col">
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-            <div class="panel-card-body"><div class="feature-grid">
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Instant Replies</div><div class="feat-desc">Responds immediately to common questions from visitors.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Conversational Qualification</div><div class="feat-desc">Qualifies leads through natural conversation rather than static forms.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Action Execution</div><div class="feat-desc">Books appointments or routes inquiries to specific team members.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Omni-Channel Support</div><div class="feat-desc">Works across Website, Messenger, and WhatsApp.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">24/7 Availability</div><div class="feat-desc">Ensures no inquiry is missed regardless of time of day.</div></div></div>
-            </div></div>
-          </div>
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span style="font-size:0.72rem;color:var(--muted);font-weight:500;">Click to copy</span></div>
-            <div class="panel-card-body"><div class="pitch-list">
-              <div class="pitch-item" onclick="copyPitch(this)">"Capture revenue 24/7. Your website becomes a lead generation machine that never sleeps, capturing interest even when you are offline."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Speed wins. By responding instantly to inquiries, you drastically increase the chance of converting a visitor into a client."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Stop answering the same repetitive questions. The AI handles the FAQs so you can focus on complex sales conversations."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Meet your customers where they are. Whether they message on Facebook, WhatsApp, or your site, they get an instant, professional reply."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Turn traffic into appointments. The bot doesn't just chat; it qualifies visitors and books meetings directly on your calendar."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-            </div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─── WORKFLOW 4 ─────────────────────── -->
-      <div class="workflow-view" id="wf-4">
-        <div class="workflow-hero">
-          <div class="workflow-hero-top">
-            <div class="workflow-hero-left">
-              <div class="workflow-number"><i class="fas fa-calendar-check"></i> Workflow 4</div>
-              <h1 class="workflow-hero-title">Appointment Booked → AI Call Preparation</h1>
-            </div>
-            <div class="workflow-hero-right"><div class="workflow-nav-btns">
-              <button class="wf-nav-btn" onclick="prevWorkflow()"><i class="fas fa-chevron-left"></i></button>
-              <button class="wf-nav-btn" onclick="nextWorkflow()"><i class="fas fa-chevron-right"></i></button>
-            </div></div>
-          </div>
-          <div class="workflow-benefit-bar">
-            <div class="benefit-icon"><i class="fas fa-trophy"></i></div>
-            <div class="benefit-content">
-              <div class="benefit-label">Core Benefit</div>
-              <div class="benefit-text">Dramatically increase close rates by showing up to every meeting fully prepared.</div>
-            </div>
-          </div>
-        </div>
-        <div class="two-col">
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-            <div class="panel-card-body"><div class="feature-grid">
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Appointment Detection</div><div class="feat-desc">Automatically recognizes when a sales call is booked.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">History Retrieval</div><div class="feat-desc">Pulls CRM data and past conversation history.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">AI Briefing</div><div class="feat-desc">Generates a pre-call agenda, objectives, and talking points.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Objection Handling</div><div class="feat-desc">Predicts potential client objections and provides scripts.</div></div></div>
-            </div></div>
-          </div>
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span style="font-size:0.72rem;color:var(--muted);font-weight:500;">Click to copy</span></div>
-            <div class="panel-card-body"><div class="pitch-list">
-              <div class="pitch-item" onclick="copyPitch(this)">"Never walk into a meeting cold again. You will have a 'cheat sheet' for every prospect delivered to you before the call."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Impress your clients by knowing every detail of their history without having to dig through old emails."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Confidence closes deals. This tool gives you the talking points and objection handlers you need to control the conversation."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Standardize your sales success. Even your newest rep will prep like a seasoned pro with these AI briefings."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"It's like having a sales manager whisper the winning strategy in your ear right before you pick up the phone."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-            </div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ─── WORKFLOW 5 ─────────────────────── -->
-      <div class="workflow-view" id="wf-5">
-        <div class="workflow-hero">
-          <div class="workflow-hero-top">
-            <div class="workflow-hero-left">
-              <div class="workflow-number"><i class="fas fa-clipboard-list"></i> Workflow 5</div>
-              <h1 class="workflow-hero-title">Post-Call AI Recap & Follow-Up</h1>
-            </div>
-            <div class="workflow-hero-right"><div class="workflow-nav-btns">
-              <button class="wf-nav-btn" onclick="prevWorkflow()"><i class="fas fa-chevron-left"></i></button>
-              <button class="wf-nav-btn" onclick="nextWorkflow()" disabled><i class="fas fa-chevron-right"></i></button>
-            </div></div>
-          </div>
-          <div class="workflow-benefit-bar">
-            <div class="benefit-icon"><i class="fas fa-flag-checkered"></i></div>
-            <div class="benefit-content">
-              <div class="benefit-label">Core Benefit</div>
-              <div class="benefit-text">Capture value from every conversation and ensure strong follow-through.</div>
-            </div>
-          </div>
-        </div>
-        <div class="two-col">
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-list-ul"></i> Features</div></div>
-            <div class="panel-card-body"><div class="feature-grid">
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Transcription</div><div class="feat-desc">Records and transcribes the sales call.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">AI Summarization</div><div class="feat-desc">Extracts key decisions, action items, and next steps.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Drafted Follow-Up</div><div class="feat-desc">Writes a personalized follow-up email to the client.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">CRM Updates</div><div class="feat-desc">Automatically logs notes and tasks in the CRM.</div></div></div>
-              <div class="feat"><div class="feat-dot"></div><div><div class="feat-label">Deal Tracking</div><div class="feat-desc">Ensures momentum isn't lost if the deal doesn't close immediately.</div></div></div>
-            </div></div>
-          </div>
-          <div class="panel-card">
-            <div class="panel-card-header"><div class="panel-card-title"><i class="fas fa-bullhorn"></i> Sales Pitch Points</div><span style="font-size:0.72rem;color:var(--muted);font-weight:500;">Click to copy</span></div>
-            <div class="panel-card-body"><div class="pitch-list">
-              <div class="pitch-item" onclick="copyPitch(this)">"The fortune is in the follow-up. This system ensures you send a perfect summary email minutes after hanging up."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Stop spending your Friday afternoon updating your CRM. The AI logs every call and note for you automatically."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Make your clients feel heard. Sending a detailed summary of your conversation proves you were listening and care about their needs."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"Eliminate the 'What did we agree on?' confusion. You and the client get a clear record of next steps every single time."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-              <div class="pitch-item" onclick="copyPitch(this)">"This closes the loop on your sales process, ensuring that the momentum you built on the call translates into signed deals."<div class="pitch-item-copy"><i class="fas fa-copy"></i></div></div>
-            </div></div>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
 
     </div><!-- /content-area -->
   </div><!-- /main -->
@@ -868,19 +461,13 @@
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Copied to clipboard!</span></div>
 
 <script>
-const ORDER = ['1','2','2a','2b','3','3a','3b','4','5'];
-let current = '1';
+const ORDER = [{% for svc in package_services %}'{{ svc.id }}'{% if not forloop.last %},{% endif %}{% endfor %}];
+let current = '{{ package_services.0.id }}';
 
 const TITLES = {
-  '1': 'Workflow 1: AI Email Monitoring',
-  '2': 'Workflow 2: Content Engine',
-  '2a': 'Workflow 2A: Social Media',
-  '2b': 'Workflow 2B: Automated Ads',
-  '3': 'Workflow 3: Lead Intake & CRM',
-  '3a': 'Workflow 3A: Voice AI',
-  '3b': 'Workflow 3B: Chatbot',
-  '4': 'Workflow 4: Call Preparation',
-  '5': 'Workflow 5: Post-Call Recap'
+  {% for svc in package_services %}
+  '{{ svc.id }}': 'Package {{ svc.id }}: {{ svc.name|escapejs }}'{% if not forloop.last %},{% endif %}
+  {% endfor %}
 };
 
 function showWorkflow(id) {
@@ -949,19 +536,19 @@ function copyCurrentPitch() {
 }
 
 function copyAll() {
-  let out = 'AI Business OS — Sales Pitch v2\n\n';
+  let out = 'Package Services — Sales Pitch\n\n';
   ORDER.forEach(id => {
     const v = document.getElementById('wf-' + id);
     if (!v) return;
     out += (v.querySelector('.workflow-hero-title')?.innerText || '') + '\n';
     out += 'Benefit: ' + (v.querySelector('.benefit-text')?.innerText || '') + '\n\n';
-    out += 'Sales Pitch Points:\n';
+    out += 'Advantages (Objection Handling):\n';
     v.querySelectorAll('.pitch-item').forEach(p => {
       out += p.innerText.trim().replace(/\n.*$/,'') + '\n';
     });
     out += '\n---\n\n';
   });
-  navigator.clipboard.writeText(out).then(() => showToast('All workflows copied!'));
+  navigator.clipboard.writeText(out).then(() => showToast('All packages copied!'));
 }
 
 let sidebarCollapsed = false;

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}AI Business OS — Sales Cheat Sheet{% endblock %}
+{% block title %}Package Services — Cheat Sheet{% endblock %}
 
 {% block navigation %}{% endblock %}
 {% block footer %}{% endblock %}
@@ -379,57 +379,19 @@ body { background: var(--bg); color: var(--text); height: 100vh; overflow: hidde
     <div class="cs-search-wrap">
       <div class="cs-search-inner">
         <i class="fas fa-search cs-search-ico"></i>
-        <input class="cs-search" type="text" id="csSearch" placeholder="Search workflows…" oninput="csSearch(this.value)">
+        <input class="cs-search" type="text" id="csSearch" placeholder="Search packages…" oninput="csSearch(this.value)">
       </div>
     </div>
 
     <!-- Nav -->
     <nav class="cs-nav" id="csNav">
-      <div class="cs-nav-item active" onclick="csNavClick('1')" id="csNavItem-1">
-        <div class="cs-nav-icon"><i class="fas fa-envelope"></i></div>
-        <span class="cs-nav-num">1</span>
-        <span class="cs-nav-text" id="csNavText-1">AI Email Guard</span>
+      {% for svc in package_services %}
+      <div class="cs-nav-item{% if forloop.first %} active{% endif %}" onclick="csNavClick('{{ svc.id }}')" id="csNavItem-{{ svc.id }}">
+        <div class="cs-nav-icon"><i class="fas {{ svc.icon }}"></i></div>
+        <span class="cs-nav-num">{{ svc.id }}</span>
+        <span class="cs-nav-text" id="csNavText-{{ svc.id }}">{{ svc.name|truncatewords:4 }}</span>
       </div>
-      <div class="cs-nav-item" onclick="csNavClick('2')" id="csNavItem-2">
-        <div class="cs-nav-icon"><i class="fas fa-pen-nib"></i></div>
-        <span class="cs-nav-num">2</span>
-        <span class="cs-nav-text" id="csNavText-2">Idea-to-Post</span>
-      </div>
-      <div class="cs-nav-item" onclick="csNavClick('2a')" id="csNavItem-2a">
-        <div class="cs-nav-icon"><i class="fas fa-hashtag"></i></div>
-        <span class="cs-nav-num">2A</span>
-        <span class="cs-nav-text" id="csNavText-2a">Social Media</span>
-      </div>
-      <div class="cs-nav-item" onclick="csNavClick('2b')" id="csNavItem-2b">
-        <div class="cs-nav-icon"><i class="fas fa-ad"></i></div>
-        <span class="cs-nav-num">2B</span>
-        <span class="cs-nav-text" id="csNavText-2b">Automated Ads</span>
-      </div>
-      <div class="cs-nav-item" onclick="csNavClick('3')" id="csNavItem-3">
-        <div class="cs-nav-icon"><i class="fas fa-user-plus"></i></div>
-        <span class="cs-nav-num">3</span>
-        <span class="cs-nav-text" id="csNavText-3">Lead Capture</span>
-      </div>
-      <div class="cs-nav-item" onclick="csNavClick('3a')" id="csNavItem-3a">
-        <div class="cs-nav-icon"><i class="fas fa-phone-alt"></i></div>
-        <span class="cs-nav-num">3A</span>
-        <span class="cs-nav-text" id="csNavText-3a">Voice AI</span>
-      </div>
-      <div class="cs-nav-item" onclick="csNavClick('3b')" id="csNavItem-3b">
-        <div class="cs-nav-icon"><i class="fas fa-comment-dots"></i></div>
-        <span class="cs-nav-num">3B</span>
-        <span class="cs-nav-text" id="csNavText-3b">Chatbot</span>
-      </div>
-      <div class="cs-nav-item" onclick="csNavClick('4')" id="csNavItem-4">
-        <div class="cs-nav-icon"><i class="fas fa-calendar-check"></i></div>
-        <span class="cs-nav-num">4</span>
-        <span class="cs-nav-text" id="csNavText-4">Sales Prep</span>
-      </div>
-      <div class="cs-nav-item" onclick="csNavClick('5')" id="csNavItem-5">
-        <div class="cs-nav-icon"><i class="fas fa-handshake"></i></div>
-        <span class="cs-nav-num">5</span>
-        <span class="cs-nav-text" id="csNavText-5">Follow-Up</span>
-      </div>
+      {% endfor %}
     </nav>
 
     <div class="cs-sb-foot">
@@ -443,8 +405,8 @@ body { background: var(--bg); color: var(--text); height: 100vh; overflow: hidde
     <!-- Topbar -->
     <div class="cs-topbar">
       <div>
-        <div class="cs-topbar-title" id="csTopTitle">Sales Cheat Sheet</div>
-        <div class="cs-topbar-sub">Benefit-first · Click any pitch point to copy</div>
+        <div class="cs-topbar-title" id="csTopTitle">Package Services Cheat Sheet</div>
+        <div class="cs-topbar-sub">Benefit-first · Click any advantage to copy</div>
       </div>
       <div class="cs-topbar-actions">
         <button class="cs-action-btn" onclick="csCopyAll()" id="csCopyAllBtn"><i class="fas fa-copy"></i> Copy All</button>
@@ -457,15 +419,9 @@ body { background: var(--bg); color: var(--text); height: 100vh; overflow: hidde
 
     <!-- Progress strip -->
     <div class="cs-strip" id="csStrip">
-      <div class="cs-strip-step active" onclick="csStripClick('1')" data-id="1"><div class="cs-strip-num">1</div>Email</div>
-      <div class="cs-strip-step" onclick="csStripClick('2')" data-id="2"><div class="cs-strip-num">2</div>Content</div>
-      <div class="cs-strip-step" onclick="csStripClick('2a')" data-id="2a"><div class="cs-strip-num">2A</div>Social</div>
-      <div class="cs-strip-step" onclick="csStripClick('2b')" data-id="2b"><div class="cs-strip-num">2B</div>Ads</div>
-      <div class="cs-strip-step" onclick="csStripClick('3')" data-id="3"><div class="cs-strip-num">3</div>Leads</div>
-      <div class="cs-strip-step" onclick="csStripClick('3a')" data-id="3a"><div class="cs-strip-num">3A</div>Voice</div>
-      <div class="cs-strip-step" onclick="csStripClick('3b')" data-id="3b"><div class="cs-strip-num">3B</div>Chat</div>
-      <div class="cs-strip-step" onclick="csStripClick('4')" data-id="4"><div class="cs-strip-num">4</div>Prep</div>
-      <div class="cs-strip-step" onclick="csStripClick('5')" data-id="5"><div class="cs-strip-num">5</div>Recap</div>
+      {% for svc in package_services %}
+      <div class="cs-strip-step{% if forloop.first %} active{% endif %}" onclick="csStripClick('{{ svc.id }}')" data-id="{{ svc.id }}"><div class="cs-strip-num">{{ svc.id }}</div>{{ svc.name|truncatewords:2 }}</div>
+      {% endfor %}
     </div>
 
     <!-- Scroll area -->
@@ -476,330 +432,40 @@ body { background: var(--bg); color: var(--text); height: 100vh; overflow: hidde
 
       <!-- ════════════ CHEAT SHEET TAB ════════════ -->
       <div class="cs-view active" id="csViewCheat">
-
-        <!-- WF 1 -->
-        <div class="cs-wf-card" id="csCard-1">
-          <div class="cs-wf-head open" onclick="csToggleCard('1', event)">
+        {% for svc in package_services %}
+        <div class="cs-wf-card" id="csCard-{{ svc.id }}">
+          <div class="cs-wf-head{% if forloop.first %} open{% endif %}" onclick="csToggleCard('{{ svc.id }}', event)">
             <div class="cs-wf-head-left">
-              <div class="cs-wf-ico blue"><i class="fas fa-envelope"></i></div>
-              <div class="cs-wf-name">Workflow 1 – AI Email Guard & Response Drafter</div>
+              <div class="cs-wf-ico {% cycle 'blue' 'purple' 'green' 'orange' 'indigo' %}"><i class="fas {{ svc.icon }}"></i></div>
+              <div class="cs-wf-name">Package {{ svc.id }} – {{ svc.name }}</div>
             </div>
             <div class="cs-wf-head-right">
-              <button class="cs-copy-btn" onclick="csCopyCard('1', event)"><i class="fas fa-copy"></i> Copy</button>
-              <i class="fas fa-chevron-up cs-chevron" id="csChevron-1"></i>
+              <button class="cs-copy-btn" onclick="csCopyCard('{{ svc.id }}', event)"><i class="fas fa-copy"></i> Copy</button>
+              <i class="fas fa-chevron-{% if forloop.first %}up{% else %}down{% endif %} cs-chevron" id="csChevron-{{ svc.id }}"></i>
             </div>
           </div>
-          <div class="cs-wf-body open" id="csBody-1">
+          <div class="cs-wf-body{% if forloop.first %} open{% endif %}" id="csBody-{{ svc.id }}">
             <div class="cs-wf-grid">
               <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-list-ul"></i> What it does</div>
+                <div class="cs-inner-head"><i class="fas fa-list-ul"></i> Features</div>
                 <div class="cs-inner-body">
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Monitors Gmail/Outlook and auto-classifies emails by priority.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Drafts professional replies in the user's brand voice and saves as drafts.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Reduces inbox overload while keeping the user in full control.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Centralizes email handling so nothing important slips through.</div>
+                  {% for feat in svc.features %}
+                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>{{ feat.0 }}: {{ feat.1 }}</div>
+                  {% endfor %}
                 </div>
               </div>
               <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-bullhorn"></i> Sales points <span style="font-size:0.65rem;font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px;">— click to copy</span></div>
+                <div class="cs-inner-head"><i class="fas fa-bullhorn"></i> Advantages <span style="font-size:0.65rem;font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px;">— click to copy</span></div>
                 <div class="cs-inner-body">
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Reclaims 1–2 hours per day from the inbox without losing control of messaging."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Gives every user a personal email assistant that never gets tired or distracted."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Ensures faster, more consistent replies — happier clients and more closed deals."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Protects focus time so salespeople can sell instead of living in their inbox."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
+                  {% for adv in svc.advantages %}
+                  <div class="cs-sales-item" onclick="csCopySales(this)">"{{ adv }}"<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
+                  {% endfor %}
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- WF 2 -->
-        <div class="cs-wf-card" id="csCard-2">
-          <div class="cs-wf-head" onclick="csToggleCard('2', event)">
-            <div class="cs-wf-head-left">
-              <div class="cs-wf-ico purple"><i class="fas fa-pen-nib"></i></div>
-              <div class="cs-wf-name">Workflow 2 – "Idea-to-Post" Content Engine</div>
-            </div>
-            <div class="cs-wf-head-right">
-              <button class="cs-copy-btn" onclick="csCopyCard('2', event)"><i class="fas fa-copy"></i> Copy</button>
-              <i class="fas fa-chevron-down cs-chevron" id="csChevron-2"></i>
-            </div>
-          </div>
-          <div class="cs-wf-body" id="csBody-2">
-            <div class="cs-wf-grid">
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-list-ul"></i> What it does</div>
-                <div class="cs-inner-body">
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Turns a raw idea (voice note or text) into a full set of social posts.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Auto-creates platform-specific content for Instagram, Facebook, LinkedIn.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Handles formatting, variations, and scheduling in advance.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Keeps the brand consistently visible without daily manual content work.</div>
-                </div>
-              </div>
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-bullhorn"></i> Sales points <span style="font-size:0.65rem;font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px;">— click to copy</span></div>
-                <div class="cs-inner-body">
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Eliminates content paralysis—one idea becomes a week of posts in minutes."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Gives clients always-on visibility without needing a full-time content team."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Helps them look bigger and more professional online than their competitors."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Perfect for busy founders who hate social but still need to be everywhere."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- WF 2A -->
-        <div class="cs-wf-card" id="csCard-2a">
-          <div class="cs-wf-head" onclick="csToggleCard('2a', event)">
-            <div class="cs-wf-head-left">
-              <div class="cs-wf-ico purple"><i class="fas fa-bullhorn"></i></div>
-              <div class="cs-wf-name">Workflow 2A – Automated Social Media (Maintenance)</div>
-            </div>
-            <div class="cs-wf-head-right">
-              <button class="cs-copy-btn" onclick="csCopyCard('2a', event)"><i class="fas fa-copy"></i> Copy</button>
-              <i class="fas fa-chevron-down cs-chevron" id="csChevron-2a"></i>
-            </div>
-          </div>
-          <div class="cs-wf-body" id="csBody-2a">
-            <div class="cs-wf-grid">
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-list-ul"></i> What it does</div>
-                <div class="cs-inner-body">
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Voice-to-Post: Turns raw voice messages into polished content.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Creates posts for Instagram, Facebook, and LinkedIn simultaneously.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Handles the posting calendar and times automatically.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Maintains specific messaging and tone across all channels.</div>
-                </div>
-              </div>
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-bullhorn"></i> Sales points <span style="font-size:0.65rem;font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px;">— click to copy</span></div>
-                <div class="cs-inner-body">
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Your baseline insurance policy for visibility—you will never 'go dark' on social media again."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Free yourself from the daily grind of logging in to post."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"One piece of content formatted perfectly for every major platform."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Frees up your mental bandwidth for high-revenue activities."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- WF 2B -->
-        <div class="cs-wf-card" id="csCard-2b">
-          <div class="cs-wf-head" onclick="csToggleCard('2b', event)">
-            <div class="cs-wf-head-left">
-              <div class="cs-wf-ico purple"><i class="fas fa-ad"></i></div>
-              <div class="cs-wf-name">Workflow 2B – Automated Ads (Paid Media)</div>
-            </div>
-            <div class="cs-wf-head-right">
-              <button class="cs-copy-btn" onclick="csCopyCard('2b', event)"><i class="fas fa-copy"></i> Copy</button>
-              <i class="fas fa-chevron-down cs-chevron" id="csChevron-2b"></i>
-            </div>
-          </div>
-          <div class="cs-wf-body" id="csBody-2b">
-            <div class="cs-wf-grid">
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-list-ul"></i> What it does</div>
-                <div class="cs-inner-body">
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Auto-Copywriting: Generates ad copy and headlines automatically.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Creates multiple ad variations to test what performs best.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Refines messaging continuously based on performance data.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Supports Meta (Facebook/Instagram) and Google ad platforms.</div>
-                </div>
-              </div>
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-bullhorn"></i> Sales points <span style="font-size:0.65rem;font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px;">— click to copy</span></div>
-                <div class="cs-inner-body">
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Stop burning budget on bad ads. AI finds the winner faster than any human."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"No need to hire an expensive agency — the system handles the creative heavy lifting."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Launch campaigns in minutes, not days. From offer input to deployment."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Scale revenue by automating the hardest part of paid ads: copy that converts."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- WF 3 -->
-        <div class="cs-wf-card" id="csCard-3">
-          <div class="cs-wf-head" onclick="csToggleCard('3', event)">
-            <div class="cs-wf-head-left">
-              <div class="cs-wf-ico green"><i class="fas fa-user-plus"></i></div>
-              <div class="cs-wf-name">Workflow 3 – 24/7 Lead Capture & Qualification</div>
-            </div>
-            <div class="cs-wf-head-right">
-              <button class="cs-copy-btn" onclick="csCopyCard('3', event)"><i class="fas fa-copy"></i> Copy</button>
-              <i class="fas fa-chevron-down cs-chevron" id="csChevron-3"></i>
-            </div>
-          </div>
-          <div class="cs-wf-body" id="csBody-3">
-            <div class="cs-wf-grid">
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-list-ul"></i> What it does</div>
-                <div class="cs-inner-body">
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Captures leads 24/7 from chatbots, voice AI, or web forms.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Uses AI to score and qualify leads based on fit and intent.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Auto-updates CRM pipeline with status, tags, and next steps.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Triggers immediate email/SMS follow-up so leads don't go cold.</div>
-                </div>
-              </div>
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-bullhorn"></i> Sales points <span style="font-size:0.65rem;font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px;">— click to copy</span></div>
-                <div class="cs-inner-body">
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Never lose another lead just because it came in after hours."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Automatically separates hot leads from tire-kickers — focus on the right people."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Increases speed-to-lead, which is proven to boost conversion rates."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Turns the website into a 24/7 sales rep that never sleeps or forgets to follow up."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- WF 3A -->
-        <div class="cs-wf-card" id="csCard-3a">
-          <div class="cs-wf-head" onclick="csToggleCard('3a', event)">
-            <div class="cs-wf-head-left">
-              <div class="cs-wf-ico green"><i class="fas fa-phone-alt"></i></div>
-              <div class="cs-wf-name">Workflow 3A – Automated Voice AI</div>
-            </div>
-            <div class="cs-wf-head-right">
-              <button class="cs-copy-btn" onclick="csCopyCard('3a', event)"><i class="fas fa-copy"></i> Copy</button>
-              <i class="fas fa-chevron-down cs-chevron" id="csChevron-3a"></i>
-            </div>
-          </div>
-          <div class="cs-wf-body" id="csBody-3a">
-            <div class="cs-wf-grid">
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-list-ul"></i> What it does</div>
-                <div class="cs-inner-body">
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Answers incoming calls with a natural, human-sounding AI.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Listens to the caller to understand intent and needs.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Asks qualifying questions in real-time to score the lead.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Directs calls or triggers follow-ups based on the conversation.</div>
-                </div>
-              </div>
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-bullhorn"></i> Sales points <span style="font-size:0.65rem;font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px;">— click to copy</span></div>
-                <div class="cs-inner-body">
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Your business is now open 24 hours a day — 2 PM or 2 AM, every caller gets a professional response."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Fortune 500 feel with a professional AI receptionist that costs less than a phone bill."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"AI filters the noise — you only call back the qualified leads."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Capture revenue while you sleep — take orders, book appointments, capture leads overnight."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- WF 3B -->
-        <div class="cs-wf-card" id="csCard-3b">
-          <div class="cs-wf-head" onclick="csToggleCard('3b', event)">
-            <div class="cs-wf-head-left">
-              <div class="cs-wf-ico green"><i class="fas fa-comment-dots"></i></div>
-              <div class="cs-wf-name">Workflow 3B – Automated Chatbot</div>
-            </div>
-            <div class="cs-wf-head-right">
-              <button class="cs-copy-btn" onclick="csCopyCard('3b', event)"><i class="fas fa-copy"></i> Copy</button>
-              <i class="fas fa-chevron-down cs-chevron" id="csChevron-3b"></i>
-            </div>
-          </div>
-          <div class="cs-wf-body" id="csBody-3b">
-            <div class="cs-wf-grid">
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-list-ul"></i> What it does</div>
-                <div class="cs-inner-body">
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Responds instantly to common questions from website visitors.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Qualifies leads through natural conversation rather than static forms.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Books appointments or routes inquiries to specific team members.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Works across Website, Messenger, and WhatsApp — 24/7.</div>
-                </div>
-              </div>
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-bullhorn"></i> Sales points <span style="font-size:0.65rem;font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px;">— click to copy</span></div>
-                <div class="cs-inner-body">
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Your website becomes a lead generation machine that never sleeps."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Responding instantly to inquiries drastically increases conversion."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Stop answering the same FAQs — AI handles it so you focus on complex sales."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Turn traffic into appointments — bot qualifies and books directly on your calendar."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- WF 4 -->
-        <div class="cs-wf-card" id="csCard-4">
-          <div class="cs-wf-head" onclick="csToggleCard('4', event)">
-            <div class="cs-wf-head-left">
-              <div class="cs-wf-ico orange"><i class="fas fa-clipboard-list"></i></div>
-              <div class="cs-wf-name">Workflow 4 – Intelligent Sales Prep</div>
-            </div>
-            <div class="cs-wf-head-right">
-              <button class="cs-copy-btn" onclick="csCopyCard('4', event)"><i class="fas fa-copy"></i> Copy</button>
-              <i class="fas fa-chevron-down cs-chevron" id="csChevron-4"></i>
-            </div>
-          </div>
-          <div class="cs-wf-body" id="csBody-4">
-            <div class="cs-wf-grid">
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-list-ul"></i> What it does</div>
-                <div class="cs-inner-body">
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Triggers as soon as a meeting is booked in the calendar.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Analyzes CRM data and past conversations about that contact.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Generates a pre-call brief with agenda, key points, and questions.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Includes AI-generated objection-handling scripts for that prospect.</div>
-                </div>
-              </div>
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-bullhorn"></i> Sales points <span style="font-size:0.65rem;font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px;">— click to copy</span></div>
-                <div class="cs-inner-body">
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Every rep walks into calls sounding prepared and professional, not reactive."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Boosts close rates because reps know exactly what to say and what to avoid."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Ideal for new or junior reps who need structure and talking points."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Turns scattered CRM data into a one-page 'cheat sheet' before every call."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- WF 5 -->
-        <div class="cs-wf-card" id="csCard-5">
-          <div class="cs-wf-head" onclick="csToggleCard('5', event)">
-            <div class="cs-wf-head-left">
-              <div class="cs-wf-ico indigo"><i class="fas fa-handshake"></i></div>
-              <div class="cs-wf-name">Workflow 5 – The Perfect Follow-Up Protocol</div>
-            </div>
-            <div class="cs-wf-head-right">
-              <button class="cs-copy-btn" onclick="csCopyCard('5', event)"><i class="fas fa-copy"></i> Copy</button>
-              <i class="fas fa-chevron-down cs-chevron" id="csChevron-5"></i>
-            </div>
-          </div>
-          <div class="cs-wf-body" id="csBody-5">
-            <div class="cs-wf-grid">
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-list-ul"></i> What it does</div>
-                <div class="cs-inner-body">
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Starts when a call ends (Zoom, phone, or VOIP).</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Transcribes the conversation and extracts decisions and action items.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Auto-updates CRM notes, tasks, and deal stages accurately.</div>
-                  <div class="cs-desc-item"><div class="cs-desc-dot"></div>Drafts a personalized follow-up email summarizing next steps.</div>
-                </div>
-              </div>
-              <div class="cs-inner-card">
-                <div class="cs-inner-head"><i class="fas fa-bullhorn"></i> Sales points <span style="font-size:0.65rem;font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px;">— click to copy</span></div>
-                <div class="cs-inner-body">
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Makes sure no promise, detail, or next step is ever forgotten after a call."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Delivers 'wow-level' follow-up that impresses clients and builds trust."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Saves reps from late-night admin — notes and follow-ups done automatically."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                  <div class="cs-sales-item" onclick="csCopySales(this)">"Reduces deals falling through cracks because everything is documented and actioned."<div class="cs-sales-copy"><i class="fas fa-copy"></i></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
 
       </div><!-- /csViewCheat -->
 
@@ -819,15 +485,15 @@ body { background: var(--bg); color: var(--text); height: 100vh; overflow: hidde
 {% block extra_scripts %}
 <script>
 // ── STATE ───────────────────────────────────
-const CS_ORDER = ['1','2','2a','2b','3','3a','3b','4','5'];
+const CS_ORDER = [{% for svc in package_services %}'{{ svc.id }}'{% if not forloop.last %},{% endif %}{% endfor %}];
 const CS_NAV_LABELS = {
-  cheat: { '1':'AI Email Guard','2':'Idea-to-Post','2a':'Social Media','2b':'Automated Ads','3':'Lead Capture','3a':'Voice AI','3b':'Chatbot','4':'Sales Prep','5':'Follow-Up' },
-  pitch: { '1':'Email Monitoring','2':'Content Engine','2a':'Social Media','2b':'Automated Ads','3':'Lead & CRM','3a':'Voice AI','3b':'Chatbot','4':'Call Prep','5':'Post-Call Recap' }
+  cheat: { {% for svc in package_services %}'{{ svc.id }}':'{{ svc.name|truncatewords:4|escapejs }}'{% if not forloop.last %},{% endif %}{% endfor %} },
+  pitch: { {% for svc in package_services %}'{{ svc.id }}':'{{ svc.name|truncatewords:4|escapejs }}'{% if not forloop.last %},{% endif %}{% endfor %} }
 };
 
 let csTab = 'cheat';
 let csSidebarCollapsed = false;
-let csPitchCurrent = '1';
+let csPitchCurrent = '{{ package_services.0.id }}';
 
 // ── TOAST ───────────────────────────────────
 function csShowToast(msg) {
@@ -850,7 +516,7 @@ function csSwitchTab(tab) {
   document.getElementById('csViewPitch').classList.toggle('active', tab === 'pitch');
   document.getElementById('csBtnCheat').classList.toggle('active', tab === 'cheat');
   document.getElementById('csBtnPitch').classList.toggle('active', tab === 'pitch');
-  document.getElementById('csTopTitle').textContent = tab === 'cheat' ? 'Sales Cheat Sheet' : 'Sales Pitch v2';
+  document.getElementById('csTopTitle').textContent = tab === 'cheat' ? 'Package Services Cheat Sheet' : 'Package Services Sales Pitch';
   document.getElementById('csPitchPrev').style.display = tab === 'pitch' ? '' : 'none';
   document.getElementById('csPitchNext').style.display = tab === 'pitch' ? '' : 'none';
   document.getElementById('csScrollArea').scrollTo({ top: 0, behavior: 'smooth' });
@@ -909,9 +575,9 @@ function csCopyCard(id, e) {
   const card = document.getElementById('csCard-' + id);
   if (!card) return;
   const name = card.querySelector('.cs-wf-name')?.innerText || '';
-  let txt = name + '\n\nWhat it does:\n';
+  let txt = name + '\n\nFeatures:\n';
   card.querySelectorAll('.cs-desc-item').forEach(d => { txt += '• ' + d.innerText.trim() + '\n'; });
-  txt += '\nSales points:\n';
+  txt += '\nAdvantages:\n';
   card.querySelectorAll('.cs-sales-item').forEach(s => { txt += s.childNodes[0]?.textContent.trim() + '\n'; });
   navigator.clipboard.writeText(txt).then(() => csShowToast('Workflow copied!'));
   const btn = e?.target.closest('.cs-copy-btn');
@@ -931,23 +597,23 @@ function csCopySales(el) {
 function csCopyAll() {
   let out = '';
   if (csTab === 'cheat') {
-    out = 'AI Business OS — Sales Cheat Sheet\n\n';
+    out = 'Package Services — Cheat Sheet\n\n';
     CS_ORDER.forEach(id => {
       const card = document.getElementById('csCard-' + id);
       if (!card) return;
-      out += (card.querySelector('.cs-wf-name')?.innerText || '') + '\n\nWhat it does:\n';
+      out += (card.querySelector('.cs-wf-name')?.innerText || '') + '\n\nFeatures:\n';
       card.querySelectorAll('.cs-desc-item').forEach(d => { out += '• ' + d.innerText.trim() + '\n'; });
-      out += '\nSales points:\n';
+      out += '\nAdvantages:\n';
       card.querySelectorAll('.cs-sales-item').forEach(s => { out += s.childNodes[0]?.textContent.trim() + '\n'; });
       out += '\n---\n\n';
     });
   } else {
-    out = 'AI Business OS — Sales Pitch v2\n\n';
+    out = 'Package Services — Sales Pitch\n\n';
     CS_ORDER.forEach(id => {
       const v = document.getElementById('spView-' + id);
       if (!v) return;
       out += (v.querySelector('.sp-wf-title')?.innerText || '') + '\n';
-      out += 'Benefit: ' + (v.querySelector('.sp-benefit-text')?.innerText || '') + '\n\nPitch Points:\n';
+      out += 'Benefit: ' + (v.querySelector('.sp-benefit-text')?.innerText || '') + '\n\nAdvantages:\n';
       v.querySelectorAll('.sp-pitch').forEach(p => { out += p.childNodes[0]?.textContent.trim() + '\n'; });
       out += '\n---\n\n';
     });
@@ -1013,8 +679,9 @@ document.addEventListener('keydown', e => {
 // ── INIT ────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   // Make sure first card is open
-  const body1 = document.getElementById('csBody-1');
-  const head1 = document.querySelector('#csCard-1 .cs-wf-head');
+  const firstId = CS_ORDER[0];
+  const body1 = document.getElementById('csBody-' + firstId);
+  const head1 = document.querySelector('#csCard-' + firstId + ' .cs-wf-head');
   if (body1) body1.classList.add('open');
   if (head1) head1.classList.add('open');
 });
